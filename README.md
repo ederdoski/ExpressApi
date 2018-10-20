@@ -2,8 +2,9 @@
 
 ## Introduction
 
+Example API to practice the NodeJS functionality with the Express framework.
 
-## Libs
+## Packages
 
 * [Express Framework](http://expressjs.com/es/starter/generator.html) - **Express CLI**
 * [Gestor de Base de datos (ORM)](http://docs.sequelizejs.com/) - **Sequelize**
