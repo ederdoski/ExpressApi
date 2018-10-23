@@ -2,15 +2,45 @@
 
 ## Introduction
 
+Basic project where I work with augmented reality, using the RA library of vuforia in unity, add a tag that will act as a trigger and once scanned by the phone, an animation will be shown.
 
-## Libs
+## Usage
 
-* [Express Framework](http://expressjs.com/es/starter/generator.html) - **Express CLI**
-* [Gestor de Base de datos (ORM)](http://docs.sequelizejs.com/) - **Sequelize**
-* [Base de datos](https://www.npmjs.com/package/mysql2) - **MySQL2**
-* [Sequelize CLI](https://github.com/sequelize/cli) - **Sequelize CLI**
-* [JSON Parser](https://www.npmjs.com/package/body-parser) - **BodyParser**
+1) Create an account on the vuforia page
 
+```https://developer.vuforia.com/vui/auth/register```
+
+2) Download and install the following package : Download Unity Extension (legacy)
+
+```https://developer.vuforia.com/downloads/sdk```
+
+3) Open Unity and install the package.
+
+4) Add License in Vuforia
+
+```https://developer.vuforia.com/targetmanager/licenseManager/licenseListing```
+
+5) Add DataBase and Targets 
+
+```https://developer.vuforia.com/targetmanager/project/deviceTargetListing```
+
+6) Add AR camera
+
+```GameObject --> Vuforia --> AR camera```
+
+7) Add Image Target 
+
+```GameObject --> Vuforia --> Image```
+
+8) Add License 
+
+```ARCamera --> Vuforia Behaviour(Script)```
+
+9) Add Prefabs in Image target 
+
+## References
+
+* **Getting Started** - [Vuforia](https://library.vuforia.com/articles/Training/getting-started-with-vuforia-in-unity.html)
 
 ## Author
 

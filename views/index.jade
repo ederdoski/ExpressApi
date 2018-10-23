@@ -2,11 +2,22 @@ extends layout
 
 block content
 	h2  List of Routes of this Api 
-		ul.list
-			li.marginB
-				a(href='http://localhost:3000/api') Index
-			|   
-			li.marginB a(href='http://localhost:3000/users') Users
+		ul.list 
+			li.marginB 
+				a(href='http://localhost:3000/users') Users
+				ul   
+					br
+					li GET
+					|    
+					br   
+					li  POST  
+							p.font-low AddUser: [ name, lastName, email ]
+					|       
+					li  PUT  
+						p.font-low UpdateUser: [ id, name, lastName, email ]
+					|       
+					li DELETE 
+						p.font-low DeleteUser: [ id, email ]
 
 
 

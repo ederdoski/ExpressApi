@@ -2,6 +2,43 @@ var express = require('express');
 var router  = express.Router();
 const db    = require('../models/index');
 
+function isUserExists (email, callback){
+	try{
+		db.Users.findAll({
+			  where: {
+			    email: email
+			  }
+			}).then(function (users) {
+
+				if(users.length > 0){
+					callback(true);
+				}else{
+					callback(false);
+				}
+			});
+	} catch (error) {
+	    res.status(500).json({"response":"fail", "error": error});
+	}
+}
+
+//--- Get Users
+
+router.get('/', async(req, res, next) => {	
+
+    try {
+    	await db.Users.findAll({
+		  where: {
+		    status: "active"
+		  }
+		}).then(users => {
+         res.status(200).json({"response":"success", "data": users});
+     	})
+    } catch (error) {
+        res.status(500).json({"response":"fail", "error": error});
+    }
+
+});
+
 //--- Add Users
 
 router.post('/', function(req, res, next) {	
@@ -14,16 +51,15 @@ router.post('/', function(req, res, next) {
 
 	if(isValidData){
 		try {
-			
-			db.Users.findAll({
-			  where: {
-			    email: req.body.email
-			  }
-			}).then(function (users) {
 
-				if(users.length > 0){
+			isUserExists(req.body.email, function(response)
+			{
+				if(response)
+				{
 					res.status(403).json({"response":"fail", "error": "Email already registered"});
-				}else{
+				}
+				else
+				{
 					db.Users.build({
 						name : 		req.body.name,
 						lastName :  req.body.lastName,
@@ -32,8 +68,7 @@ router.post('/', function(req, res, next) {
 
 					res.status(201).json({"response":"success"});
 				}
-	    	});
-			
+			})
 	    } catch (error) {
 	        res.status(500).json({"response":"fail", "error": error});
 	    }
@@ -42,18 +77,56 @@ router.post('/', function(req, res, next) {
 	}
 });
 
-//--- Get Users
+//--- Update User
 
-router.get('/', async(req, res, next) => {	
+router.put('/', function(req, res, next) {	
 
-    try {
-      await db.Users.findAll().then(users => {
-         res.status(200).json({"response":"success", "data": users});
-      })
-    } catch (error) {
-        res.status(500).json({"response":"fail", "error": error});
-    }
+	isUserExists(req.body.email, function(response)
+	{
+		if(response)
+		{
+			db.Users.update({
+				name: req.body.name,
+				lastName: req.body.lastName,
+				email: req.body.email
+			},{
+				where: {
+		            id: req.body.id
+		        }
+			})
 
+			res.status(201).json({"response":"success"});
+		}
+		else
+		{
+			res.status(403).json({"response":"fail", "error": "Unregistered user"});
+		}
+	})
+});
+
+//--- Delete User
+
+router.delete('/', function(req, res, next) {	
+
+	isUserExists(req.body.email, function(response)
+	{
+		if(response)
+		{
+			db.Users.update({
+				status: 'inactive'
+			},{
+				where: {
+		            id: req.body.id
+		        }
+			})
+
+			res.status(201).json({"response":"success"});
+		}
+		else
+		{
+			res.status(403).json({"response":"fail", "error": "Unregistered user"});
+		}
+	})
 });
 
 module.exports = router;

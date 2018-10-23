@@ -14,3 +14,7 @@ a {
 .marginB{
 	margin-bottom: 10px;
 }
+
+.font-low{
+	font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
